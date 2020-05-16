@@ -256,7 +256,9 @@ struct DualDEObject : public SceneObject
 			// At some parts of the fractal, m can become NaN (hairs),
 			// which pollutes everything downstream.
 			// Calling code should deal with it.
-			normal_os_out = normalise(dr);
+			//normal_os_out = normalise(dr);
+			const real l = 1. / std::sqrt( dr.x*dr.x + dr.y*dr.y + dr.z*dr.z );
+			normal_os_out = dr; normal_os_out.x *= l; normal_os_out.y *= l; normal_os_out.z *= l;
 			return de;
 		}
 		else
@@ -272,7 +274,7 @@ struct DualDEObject : public SceneObject
 	// Get the distance estimate and normal vector for point p in object space
 	virtual real getDE(const DualVec3r & p_os, vec3r & normal_os_out) noexcept = 0;
 
-#if 0	
+#if 1	
 	// Dual numbers provide exact normals as part of the evaluation
 	virtual vec3r getNormal(const vec3r & p) noexcept override final
 	{
