@@ -3,6 +3,8 @@
 /FractalTracer_msvc2019/x64
 /FractalTracer_msvc2019/*.user
 /FractalTracer_msvc2019/*.png
+/src/*.exe
+/src/*.png
 src/FractalTracer
 *.ipch
 *.suo
