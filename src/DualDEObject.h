@@ -256,9 +256,9 @@ struct DualDEObject : public SceneObject
 			// At some parts of the fractal, m can become NaN (hairs),
 			// which pollutes everything downstream.
 			// Calling code should deal with it.
-			//normal_os_out = normalise(dr);
-			const real l = 1. / std::sqrt( dr.x*dr.x + dr.y*dr.y + dr.z*dr.z );
-			normal_os_out = dr; normal_os_out.x *= l; normal_os_out.y *= l; normal_os_out.z *= l;
+			normal_os_out = normalise(dr);
+			//const real l = 1. / std::sqrt( dr.x*dr.x + dr.y*dr.y + dr.z*dr.z );
+			//normal_os_out = dr; normal_os_out.x *= l; normal_os_out.y *= l; normal_os_out.z *= l;
 			return de;
 		}
 		else
