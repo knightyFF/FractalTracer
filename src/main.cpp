@@ -139,7 +139,7 @@ int main(int argc, char ** argv)
 		DualMandelbulbIteration mbi;
 		DualMengerSpongeCIteration msi; //msi.stc.x = 1.5f; msi.stc.y = 0.75f; msi.scale = 2.8f;
 		DualCubicbulbIteration cbi;
-		DualAmazingboxIteration ai; //ai.scale = 1.75f;
+		DualAmazingboxIteration ai; ai.scale = -1.75f;
 		DualOctopusIteration oi;
 		DualBenesiPine2Iteration bp2;
 		DualRiemannSphereIteration rs;
@@ -148,15 +148,15 @@ int main(int argc, char ** argv)
 		std::vector<IterationFunction *> iter_funcs;
 		//iter_funcs.push_back(oi.clone());
 		//iter_funcs.push_back(pki.clone());
-		//iter_funcs.push_back(mbi.clone());
+		iter_funcs.push_back(mbi.clone());
 		//iter_funcs.push_back(msi.clone());
-		iter_funcs.push_back(ai.clone());
+		//iter_funcs.push_back(ai.clone());
 		//iter_funcs.push_back(cbi.clone());
 		//iter_funcs.push_back(dki.clone());
 
 		const std::vector<char> iter_seq = { 0 };
 
-		const int max_iters = 64;
+		const int max_iters = 10;
 		GeneralDualDE hybrid(max_iters, iter_funcs, iter_seq);
 
 		hybrid.radius = 4.0; // For Mandelbulb p8, bounding sphere has approximate radius of 1.2 or so

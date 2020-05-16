@@ -272,6 +272,7 @@ struct DualDEObject : public SceneObject
 	// Get the distance estimate and normal vector for point p in object space
 	virtual real getDE(const DualVec3r & p_os, vec3r & normal_os_out) noexcept = 0;
 
+#if 0	
 	// Dual numbers provide exact normals as part of the evaluation
 	virtual vec3r getNormal(const vec3r & p) noexcept override final
 	{
@@ -282,6 +283,23 @@ struct DualDEObject : public SceneObject
 		(void) de_ignored;
 		return normal_os;
 	}
+#else
+	// Dual numbers provide exact normals as part of the evaluation
+	virtual vec3r getNormal(const vec3r & p) noexcept override final
+	{
+		const DualVec3r p_dual(Dual3r(p.x, 0), Dual3r(p.y, 1), Dual3r(p.z, 2));
+		#define FT_DELTA 0.0001
+		vec3r normal_os;
+		const real de0 = getDE(DualVec3r(Dual3r(p.x, 0), Dual3r(p.y, 1), Dual3r(p.z, 2)), normal_os);
+		const real dex = getDE(DualVec3r(Dual3r(p.x + FT_DELTA, 0), Dual3r(p.y, 1), Dual3r(p.z, 2)), normal_os);
+		const real dey = getDE(DualVec3r(Dual3r(p.x, 0), Dual3r(p.y + FT_DELTA, 1), Dual3r(p.z, 2)), normal_os);
+		const real dez = getDE(DualVec3r(Dual3r(p.x, 0), Dual3r(p.y, 1), Dual3r(p.z + FT_DELTA, 2)), normal_os);
+		normal_os = normalise(vec3r(dex - de0, dey - de0, dez - de0) / FT_DELTA);
+		
+		return normal_os;
+		#undef FT_DELTA
+	}
+#endif
 
 	virtual real intersect(const Ray & r) noexcept override final
 	{
