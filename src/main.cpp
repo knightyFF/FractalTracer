@@ -137,7 +137,7 @@ int main(int argc, char ** argv)
 #else
 		DualPseudoKleinianIteration pki;
 		DualMandelbulbIteration mbi;
-		DualMengerSpongeCIteration msi; //msi.stc.x = 1.5f; msi.stc.y = 0.75f; msi.scale = 2.8f;
+		DualMengerSpongeCIteration msi; //msi.scale_centre = {1.5f, 0.75f, 0.0f}; msi.scale = 2.8f;
 		DualCubicbulbIteration cbi;
 		DualAmazingboxIteration ai; ai.scale = -1.75f;
 		DualOctopusIteration oi;
@@ -149,8 +149,8 @@ int main(int argc, char ** argv)
 		//iter_funcs.push_back(oi.clone());
 		//iter_funcs.push_back(pki.clone());
 		//iter_funcs.push_back(mbi.clone());
-		//iter_funcs.push_back(msi.clone());
-		iter_funcs.push_back(ai.clone());
+		iter_funcs.push_back(msi.clone());
+		//iter_funcs.push_back(ai.clone());
 		//iter_funcs.push_back(cbi.clone());
 		//iter_funcs.push_back(dki.clone());
 
@@ -159,8 +159,8 @@ int main(int argc, char ** argv)
 		const int max_iters = 10;
 		GeneralDualDE hybrid(max_iters, iter_funcs, iter_seq);
 
-		hybrid.radius = 4.0; // For Mandelbulb p8, bounding sphere has approximate radius of 1.2 or so
-		hybrid.step_scale = 0.5; //1;
+		hybrid.radius = 6.0; // For Mandelbulb p8, bounding sphere has approximate radius of 1.2 or so
+		hybrid.step_scale = 0.5; //1;//
 		hybrid.mat.albedo = { 0.1f, 0.3f, 0.7f };
 		hybrid.mat.use_fresnel = true;
 

@@ -19,7 +19,7 @@ struct DualAmazingboxIteration final : public IterationFunction
 	virtual void init(const DualVec3r & p_0) noexcept override final
 	{
 		if (!julia_mode)
-			c = p_0;
+			c = p_0;//There is a side effect here. Depending on how things work outside this class, If the user switches to a julia after doing a mandel then the julia seed is changed. What about multithreading ?
 	}
 
 	virtual void eval(const DualVec3r & p_in, DualVec3r & p_out) const noexcept override final
@@ -53,7 +53,7 @@ protected:
 		const real r2 = p_in.x.v[0] * p_in.x.v[0] + p_in.y.v[0] * p_in.y.v[0] + p_in.z.v[0] * p_in.z.v[0];
 		return
 			(r2 < min_r2) ? p_in * (fix_r2 / min_r2) : // linear inner scaling
-			(r2 < fix_r2) ? p_in * (fix_r2 / r2) : // this is the actual sphere inversion
+			(r2 < fix_r2) ? p_in * (fix_r2 / r2) : // What about the derivative of r2 ?
 			p_in;
 	}
 };

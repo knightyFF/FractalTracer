@@ -274,7 +274,7 @@ struct DualDEObject : public SceneObject
 	// Get the distance estimate and normal vector for point p in object space
 	virtual real getDE(const DualVec3r & p_os, vec3r & normal_os_out) noexcept = 0;
 
-#if 1	
+#if 0	
 	// Dual numbers provide exact normals as part of the evaluation
 	virtual vec3r getNormal(const vec3r & p) noexcept override final
 	{
